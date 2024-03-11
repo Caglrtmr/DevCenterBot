@@ -8,6 +8,7 @@ using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace DevCenterBot
 {
@@ -36,6 +37,31 @@ namespace DevCenterBot
 
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
             services.AddTransient<IBot, Bots.EchoBot>();
+
+            services.Configure<BotSettings>(botSettings =>
+            {
+                //botSettings.AccessCacheExpiryInDays = Convert.ToInt32(this.Configuration["AccessCacheExpiryInDays"]);
+                //botSettings.AppBaseUri = this.Configuration["AppBaseUri"];
+                //botSettings.ExpertAppId = this.Configuration["ExpertAppId"];
+                //botSettings.ExpertAppPassword = this.Configuration["ExpertAppPassword"];
+                //botSettings.UserAppId = this.Configuration["UserAppId"];
+                //botSettings.UserAppPassword = this.Configuration["UserAppPassword"];
+                //botSettings.TenantId = this.Configuration["TenantId"];
+
+                botSettings.AOAI_ENDPOINT = (this.Configuration["AOAI_ENDPOINT"]);
+                botSettings.AOAI_KEY = this.Configuration["AOAI_KEY"];
+                botSettings.AOAI_DEPLOYMENTID = this.Configuration["AOAI_DEPLOYMENTID"];
+                botSettings.SEARCH_INDEX_NAME = this.Configuration["SEARCH_INDEX_NAME"];
+                botSettings.SEARCH_SERVICE_NAME = this.Configuration["SEARCH_SERVICE_NAME"];
+                botSettings.SEARCH_QUERY_KEY = this.Configuration["SEARCH_QUERY_KEY"];
+
+
+                botSettings.SettingForPrompt = this.Configuration["SettingForPrompt"];
+                botSettings.SettingForTemperature = this.Configuration["SettingForTemperature"];
+                botSettings.SettingForMaxToken = this.Configuration["SettingForMaxToken"];
+                botSettings.SettingForTopK = this.Configuration["SettingForTopK"];
+
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
